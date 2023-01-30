@@ -1,0 +1,19 @@
+name: update OpenVPN
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: update OpenVPN
+        run: |
+          set -e
+          downloadLink=$(curl -sLRJ "https://openvpn.net/community-downloads/" | grep -o "https.*amd64\.msi" | head -n 1)
+          mkdir -p OpenVPN
+          cd OpenVPN
+          curl -sLRJO "$downloadLink"
+          cp "$(basename "$downloadLink")" "OpenVPN-latest-amd64.msi"
+      - uses: stefanzweifel/git-auto-commit-action@v4
