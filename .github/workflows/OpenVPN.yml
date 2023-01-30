@@ -15,9 +15,9 @@ jobs:
           mkdir -p OpenVPN/history
           cd OpenVPN/history
           curl -sLRJO "$downloadLink"
-          cp "$(basename "$downloadLink")" "../OpenVPN-latest-amd64.msi"
+          ln -f "$(basename "$downloadLink")" "../OpenVPN-latest-amd64.msi"
           downloadLink="http://plai.de/android/$(curl -sLRJ "http://plai.de/android/" | grep -oP 'ics-openvpn-[\d.]+\.apk' | head -n 1)"
           curl -sLRJO "$downloadLink"
-          cp "$(basename "$downloadLink")" "../openvpn-latest.apk"
+          ln -f "$(basename "$downloadLink")" "../openvpn-latest.apk"
 
       - uses: stefanzweifel/git-auto-commit-action@v4
